@@ -18,8 +18,6 @@ export default {
         input: {
           code: string;
           provider: SocialProvider;
-          timezone: string;
-          locale: string;
         };
       },
       context: AppContext
