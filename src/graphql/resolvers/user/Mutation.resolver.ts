@@ -1,6 +1,6 @@
 import verifyGoogleCode from "~services/google-oauth";
 import type { AppContext, UserPayload } from "~types";
-import type { UpdateUserProfileInput, SocialProvider } from "~types/graphql";
+import type { UpdateUserProfileInput, SocialLoginInput } from "~types/graphql";
 import { INVALID_SOCIAL_PROVIDER } from "~constants/responseCodes";
 import AuthenticationError from "~utils/errors/AuthenticationError";
 
@@ -8,14 +8,7 @@ export default {
   Mutation: {
     loginWithSocialProvider: async (
       _parent: unknown,
-      {
-        input,
-      }: {
-        input: {
-          code: string;
-          provider: SocialProvider;
-        };
-      },
+      { input }: { input: SocialLoginInput },
       context: AppContext
     ) => {
       const { provider, code } = input;
