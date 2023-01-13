@@ -25,7 +25,7 @@ export default {
       },
       context: AppContext
     ) => {
-      const { provider, code, timezone, locale } = input;
+      const { provider, code } = input;
       const { prismaClient, jwt, t } = context;
 
       let payload: UserPayload;
@@ -52,11 +52,9 @@ export default {
           data: {
             email,
             emailVerified,
-            locale: locale || context.language,
             firstName,
             lastName,
             pictureUrl,
-            timezone,
           },
         });
       }

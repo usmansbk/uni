@@ -1,9 +1,9 @@
 {
-  "name": "teamzone",
+  "name": "uni",
   "version": "1.0.0",
-  "description": "Time and date for teams in different timezones",
+  "description": "School calendar",
   "main": "dist/index.js",
-  "repository": "git@github.com:usmansbk/apoll-server-template.git",
+  "repository": "git@github.com:usmansbk/uni.git",
   "author": "usmansbk <usmansbk@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -53,7 +53,7 @@
     "babel-node": "babel-node --extensions '.ts'",
     "dev": "nodemon --exec yarn babel-node src",
     "test": "jest",
-    "docker:build": "docker build -t babakolo/teamzone . --target dev",
+    "docker:build": "docker build -t babakolo/uni . --target dev",
     "docker:test": "docker compose run --rm app yarn test",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev"
@@ -73,7 +73,6 @@
     "@prisma/client": "^4.8.1",
     "@sentry/node": "^7.29.0",
     "@sentry/tracing": "^7.29.0",
-    "@vvo/tzdb": "^6.89.0",
     "body-parser": "^1.20.1",
     "btoa": "^1.2.1",
     "bunyan": "^1.8.15",

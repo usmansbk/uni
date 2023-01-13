@@ -6,13 +6,7 @@ type User {
   lastName: String!
   fullName: String!
   picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
-  countryCode: CountryCode
-  timezone: String
-  tzData: TimezoneData
-  locale: Locale
   isMe: Boolean!
-  teams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
-  createdTeams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -32,19 +26,14 @@ type AuthPayload {
 
 enum SocialProvider {
   GOOGLE
-  GITHUB
 }
 
 input SocialLoginInput {
   code: String!
   provider: SocialProvider!
-  timezone: NonEmptyString
-  locale: Locale
 }
 
 input UpdateUserProfileInput {
   firstName: NonEmptyString!
   lastName: NonEmptyString!
-  timezone: NonEmptyString!
-  locale: Locale!
 }
