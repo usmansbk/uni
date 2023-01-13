@@ -5,7 +5,7 @@ import type { UserPayload } from "~types";
 import AuthenticationError from "~utils/errors/AuthenticationError";
 
 export default async function verifyGoogleCode(
-  code: string
+  idToken: string
 ): Promise<UserPayload> {
   const client = new OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID,
@@ -15,7 +15,7 @@ export default async function verifyGoogleCode(
 
   try {
     const ticket = await client.verifyIdToken({
-      idToken: code,
+      idToken,
     });
 
     const payload = ticket.getPayload();
