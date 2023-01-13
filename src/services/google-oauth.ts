@@ -14,10 +14,8 @@ export default async function verifyGoogleCode(
   });
 
   try {
-    const { tokens } = await client.getToken(code);
-
     const ticket = await client.verifyIdToken({
-      idToken: tokens.id_token!,
+      idToken: code,
     });
 
     const payload = ticket.getPayload();
