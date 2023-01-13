@@ -4,4 +4,4 @@ coverage
 node_modules
 jest.config.js
 codegen.ts
-generated/
+graphql.ts
