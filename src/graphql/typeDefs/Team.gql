@@ -1,0 +1,58 @@
+type Team {
+  id: ID!
+  name: String!
+  logo(width: PositiveInt = 100, height: PositiveInt = 100): URL
+  inviteCode: ID
+  teammates: [TeamMember]!
+  owner: User!
+  isOwner: Boolean!
+  isMember: Boolean!
+  isAdmin: Boolean!
+  isPinned: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+enum TeamRole {
+  ADMIN
+  TEAMMATE
+}
+
+type TeamMember {
+  id: ID!
+  team: Team!
+  teamId: ID!
+  member: User!
+  memberId: ID!
+  joinedAt: DateTime!
+  role: TeamRole
+  isMe: Boolean
+}
+
+type Query {
+  getTeamById(id: ID!): Team! @auth
+  getTeammatesByTimezone(id: ID!): [TeamMember]! @auth
+  getTeamPreviewByCode(code: ID!): JSON! @auth
+}
+
+type Mutation {
+  createTeam(input: CreateTeamInput!): Team! @auth
+  updateTeam(input: UpdateTeamInput!): Team! @auth
+  deleteTeam(teamId: ID!): Team! @auth
+  joinTeam(inviteCode: ID!): Team! @auth
+  leaveTeam(teamId: ID!): Team! @auth
+  removeTeammate(memberId: ID!): TeamMember! @auth
+  addTeamMemberToAdmin(memberId: ID!): TeamMember! @auth
+  removeTeamMemberFromAdmin(memberId: ID!): TeamMember! @auth
+  pinTeam(id: ID!): Team! @auth
+  unpinTeam(id: ID!): Team! @auth
+}
+
+input CreateTeamInput {
+  name: NonEmptyString!
+}
+
+input UpdateTeamInput {
+  id: ID!
+  name: NonEmptyString!
+}

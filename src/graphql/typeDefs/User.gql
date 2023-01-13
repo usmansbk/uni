@@ -1,0 +1,50 @@
+type User {
+  id: ID!
+  email: EmailAddress! @auth(rules: [{ allow: owner, identityClaim: "id" }])
+  emailVerified: Boolean!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
+  countryCode: CountryCode
+  timezone: String
+  tzData: TimezoneData
+  locale: Locale
+  isMe: Boolean!
+  teams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
+  createdTeams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  me: User! @auth
+}
+
+type Mutation {
+  loginWithSocialProvider(input: SocialLoginInput!): AuthPayload!
+  updateProfile(input: UpdateUserProfileInput!): User! @auth
+}
+
+type AuthPayload {
+  token: JWT
+}
+
+enum SocialProvider {
+  GOOGLE
+  GITHUB
+}
+
+input SocialLoginInput {
+  code: String!
+  provider: SocialProvider!
+  timezone: NonEmptyString
+  locale: Locale
+}
+
+input UpdateUserProfileInput {
+  firstName: NonEmptyString!
+  lastName: NonEmptyString!
+  timezone: NonEmptyString!
+  locale: Locale!
+}

@@ -1,0 +1,29 @@
+type TimezoneData {
+  name: String!
+  alternativeName: String
+  group: [String]!
+  continentCode: String!
+  continentName: String!
+  countryName: String!
+  countryCode: CountryCode
+  countryFlag(height: PositiveInt = 20): URL
+  mainCities: [String]
+  rawOffsetInMinutes: Int!
+  abbreviation: String!
+  rawFormat: String!
+  currentTimeOffsetInMinutes: Int!
+  currentTimeFormat: String!
+}
+
+type SunriseSunset {
+  sunrise: String
+  sunset: String
+  dayLength: String
+  solarNoon: String
+}
+
+type Query {
+  timezones: [TimezoneData!]! @auth
+  getTimezonesByCountry(countryCode: CountryCode!): [TimezoneData]! @auth
+  getTimezoneById(id: ID!): TimezoneData @auth
+}

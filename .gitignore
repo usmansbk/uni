@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+coverage
+certs
+uploads
+.vscode
+yarn-error.log
+.env*
+!.env.example
+.flaskenv*
+!.env.project
+!.env.vault
