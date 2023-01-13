@@ -5,6 +5,7 @@ type User {
   firstName: String!
   lastName: String!
   fullName: String!
+  language: Locale
   picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
   isMe: Boolean!
   createdAt: DateTime!
@@ -36,4 +37,5 @@ input SocialLoginInput {
 input UpdateUserProfileInput {
   firstName: NonEmptyString!
   lastName: NonEmptyString!
+  language: Locale
 }
