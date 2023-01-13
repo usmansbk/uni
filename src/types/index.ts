@@ -4,8 +4,6 @@ import type { Redis } from "ioredis";
 import type { JwtUtil } from "src/utils/jwt";
 import { User } from "@sentry/node";
 
-export * from "./graphql";
-
 export interface AppContext {
   language: string;
   t: TFunction<"translation", undefined>;
@@ -13,6 +11,15 @@ export interface AppContext {
   redisClient: Redis;
   jwt: JwtUtil;
   currentUser?: User | null;
+}
+
+export interface UserPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  language?: string;
+  pictureUrl?: string;
+  emailVerified: boolean;
 }
 
 declare global {

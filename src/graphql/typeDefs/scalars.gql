@@ -1,0 +1,7 @@
+scalar JWT
+scalar URL
+scalar Locale
+scalar DateTime
+scalar EmailAddress
+scalar PositiveInt
+scalar NonEmptyString

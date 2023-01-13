@@ -1,10 +1,6 @@
 import verifyGoogleCode from "src/services/google-oauth";
-import {
-  AppContext,
-  SocialProvider,
-  UpdateProfileInput,
-  UserPayload,
-} from "src/types";
+import { AppContext, UserPayload } from "src/types";
+import { UpdateUserProfileInput, SocialProvider } from "src/generated/graphql";
 import { INVALID_SOCIAL_PROVIDER } from "src/constants/responseCodes";
 import AuthenticationError from "src/utils/errors/AuthenticationError";
 
@@ -60,7 +56,7 @@ export default {
     },
     updateProfile: (
       parent: unknown,
-      { input }: { input: UpdateProfileInput },
+      { input }: { input: UpdateUserProfileInput },
       context: AppContext
     ) => {
       const { prismaClient, currentUser } = context;
