@@ -24,6 +24,7 @@ export interface UserPayload {
   firstName: string;
   lastName: string;
   email: string;
+  language?: string;
   pictureUrl?: string;
   emailVerified: boolean;
 }

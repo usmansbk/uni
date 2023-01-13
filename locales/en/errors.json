@@ -1,3 +1,4 @@
 {
-  "InvalidTokenError": "Invalid token"
+  "InvalidTokenError": "Invalid token",
+  "TooManyApiRequests": "You can only make {{max}} requests per hour!"
 }

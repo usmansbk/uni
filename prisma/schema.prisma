@@ -17,6 +17,7 @@ model User {
   emailVerified Boolean  @default(false)
   firstName     String
   lastName      String?
+  language      String?
   avatar        File?
   pictureUrl    String?
   createdAt     DateTime @default(now())

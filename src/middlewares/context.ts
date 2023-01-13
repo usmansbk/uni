@@ -35,8 +35,8 @@ const contextMiddleware = async (
           email: currentUser.email,
         });
 
-        if (currentUser.locale) {
-          await i18n.changeLanguage(currentUser.locale);
+        if (currentUser.language) {
+          await i18n.changeLanguage(currentUser.language);
         }
       }
     } catch (e) {

@@ -1,4 +1,3 @@
-import verifyGithubCode from "src/services/github-oauth";
 import verifyGoogleCode from "src/services/google-oauth";
 import {
   AppContext,
@@ -32,8 +31,6 @@ export default {
 
       if (provider === "GOOGLE") {
         payload = await verifyGoogleCode(code);
-      } else if (provider === "GITHUB") {
-        payload = await verifyGithubCode(code);
       } else {
         throw new AuthenticationError(t(INVALID_SOCIAL_PROVIDER));
       }
