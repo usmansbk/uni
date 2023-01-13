@@ -30,7 +30,6 @@ export default async function verifyGoogleCode(
       firstName: payload.given_name!,
       lastName: payload.family_name!,
       email: payload.email!,
-      locale: payload.locale,
       emailVerified: !!payload.email_verified,
       pictureUrl: payload.picture,
     };

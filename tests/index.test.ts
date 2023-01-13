@@ -1,3 +1,3 @@
 test("test", () => {
-  expect(process.env.APP_NAME).toBe("Timetable");
+  expect(process.env.APP_NAME).toBe("Uni");
 });
