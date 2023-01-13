@@ -1,12 +1,10 @@
 import { defaultFieldResolver, GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
-import type { AppContext, AuthRule } from "src/types";
-import AuthenticationError from "src/utils/errors/AuthenticationError";
-import ForbiddenError from "src/utils/errors/ForbiddenError";
-import {
-  AUTHENTICATION_ERROR,
-  AUTHORIZATION_ERROR,
-} from "src/constants/errors";
+import type { AppContext } from "~types";
+import type { AuthRule } from "~types/graphql";
+import AuthenticationError from "~utils/errors/AuthenticationError";
+import ForbiddenError from "~utils/errors/ForbiddenError";
+import { AUTHENTICATION_ERROR, AUTHORIZATION_ERROR } from "~constants/errors";
 
 export default function authDirectiveTransformer(
   schema: GraphQLSchema,
@@ -44,7 +42,7 @@ export default function authDirectiveTransformer(
               const checks = rules.map(({ allow, identityClaim }) => {
                 switch (allow) {
                   case "owner": {
-                    return source[identityClaim] === currentUser.id;
+                    return source[identityClaim!] === currentUser.id;
                   }
                   default: {
                     return false;

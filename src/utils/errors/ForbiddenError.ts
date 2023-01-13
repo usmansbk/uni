@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { AUTHORIZATION_ERROR } from "src/constants/errors";
+import { AUTHORIZATION_ERROR } from "~constants/errors";
 
 export default class ForbiddenError extends GraphQLError {
   constructor(message: string, cause?: Error) {

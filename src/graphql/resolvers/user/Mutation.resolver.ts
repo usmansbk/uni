@@ -1,8 +1,8 @@
-import verifyGoogleCode from "src/services/google-oauth";
-import { AppContext, UserPayload } from "src/types";
-import type { UpdateUserProfileInput, SocialProvider } from "src/types/graphql";
-import { INVALID_SOCIAL_PROVIDER } from "src/constants/responseCodes";
-import AuthenticationError from "src/utils/errors/AuthenticationError";
+import verifyGoogleCode from "~services/google-oauth";
+import type { AppContext, UserPayload } from "~types";
+import type { UpdateUserProfileInput, SocialProvider } from "~types/graphql";
+import { INVALID_SOCIAL_PROVIDER } from "~constants/responseCodes";
+import AuthenticationError from "~utils/errors/AuthenticationError";
 
 export default {
   Mutation: {

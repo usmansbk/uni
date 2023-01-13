@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { BAD_REQUEST_ERROR } from "src/constants/errors";
+import { BAD_REQUEST_ERROR } from "~constants/errors";
 
 export default class QueryError extends GraphQLError {
   constructor(message: string, cause?: Error) {

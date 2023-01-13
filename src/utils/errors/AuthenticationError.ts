@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { AUTHENTICATION_ERROR } from "src/constants/errors";
+import { AUTHENTICATION_ERROR } from "~constants/errors";
 
 export default class AuthenticationError extends GraphQLError {
   constructor(message: string, cause?: Error) {

@@ -1,4 +1,4 @@
-import { AppContext } from "src/types";
+import { AppContext } from "~types";
 
 export default {
   Query: {

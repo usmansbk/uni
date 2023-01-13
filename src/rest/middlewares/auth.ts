@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { AUTHENTICATION_ERROR } from "src/constants/errors";
-import AuthenticationError from "src/utils/errors/AuthenticationError";
+import { AUTHENTICATION_ERROR } from "~constants/errors";
+import AuthenticationError from "~utils/errors/AuthenticationError";
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const { context } = req;

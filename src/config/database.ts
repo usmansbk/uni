@@ -1,5 +1,5 @@
 import { File, PrismaClient } from "@prisma/client";
-import { s3 } from "src/services/s3";
+import { s3 } from "~services/s3";
 
 const prismaClient = new PrismaClient();
 

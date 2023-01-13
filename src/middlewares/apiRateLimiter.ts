@@ -1,8 +1,8 @@
 import type { Request } from "express";
 import rateLimit from "express-rate-limit";
 import RedisStore from "rate-limit-redis";
-import redisClient from "src/services/redis";
-import { TOO_MANY_API_REQUESTS } from "src/constants/errors";
+import redisClient from "~services/redis";
+import { TOO_MANY_API_REQUESTS } from "~constants/errors";
 
 const MAX_API_REQUESTS = 2000;
 

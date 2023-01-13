@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import uploader from "src/rest/utils/uploader";
-import { UploadFile } from "src/types/index";
-import QueryError from "src/utils/errors/QueryError";
-import logger from "src/utils/logger";
+import uploader from "~rest/utils/uploader";
+import { UploadFile } from "~types";
+import QueryError from "~utils/errors/QueryError";
+import logger from "~utils/logger";
 import {
   FILE_UPLOADED,
   FILE_UPLOAD_FAILED,
   NO_FILE_TO_UPLOAD,
-} from "src/constants/responseCodes";
-import fileUrl from "src/utils/imageFileUrl";
+} from "~constants/responseCodes";
+import fileUrl from "~utils/imageFileUrl";
 
 const upload = uploader.single("avatar");
 

@@ -1,8 +1,8 @@
 import { OAuth2Client } from "google-auth-library";
-import { INVALID_TOKEN_ERROR } from "src/constants/errors";
-import { MISSING_NAME_AND_EMAIL } from "src/constants/responseCodes";
-import { UserPayload } from "src/types";
-import AuthenticationError from "src/utils/errors/AuthenticationError";
+import { INVALID_TOKEN_ERROR } from "~constants/errors";
+import { MISSING_NAME_AND_EMAIL } from "~constants/responseCodes";
+import type { UserPayload } from "~types";
+import AuthenticationError from "~utils/errors/AuthenticationError";
 
 export default async function verifyGoogleCode(
   code: string

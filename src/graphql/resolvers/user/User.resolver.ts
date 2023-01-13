@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
-import { AppContext } from "src/types";
-import fileUrl from "src/utils/imageFileUrl";
+import { AppContext } from "~types";
+import fileUrl from "~utils/imageFileUrl";
 
 export default {
   User: {

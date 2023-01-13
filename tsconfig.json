@@ -10,14 +10,14 @@
     "strict": true,
     "allowJs": true,
     "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"],
-      "test/*": ["tests/*"]
-    },
     "isolatedModules": false,
     "noEmit": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "~*": ["./src/*"],
+      "test/*": ["./tests/*"]
+    }
   },
   "include": ["src", "environment.d.ts", "locales"],
   "exclude": ["node_modules"]

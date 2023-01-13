@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler } from "express";
-import { INTERNAL_SERVER_ERROR } from "src/constants/errors";
-import AuthenticationError from "src/utils/errors/AuthenticationError";
-import ForbiddenError from "src/utils/errors/ForbiddenError";
-import QueryError from "src/utils/errors/QueryError";
+import { INTERNAL_SERVER_ERROR } from "~constants/errors";
+import AuthenticationError from "~utils/errors/AuthenticationError";
+import ForbiddenError from "~utils/errors/ForbiddenError";
+import QueryError from "~utils/errors/QueryError";
 
 const errorHandlerMiddleware: ErrorRequestHandler = (
   error,

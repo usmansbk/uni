@@ -1,11 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
 import { JsonWebTokenError } from "jsonwebtoken";
-import prismaClient from "src/config/database";
-import Sentry from "src/config/sentry";
-import { INVALID_TOKEN } from "src/constants/responseCodes";
-import redisClient from "src/services/redis";
-import AuthenticationError from "src/utils/errors/AuthenticationError";
-import jwt from "src/utils/jwt";
+import prismaClient from "~config/database";
+import Sentry from "~config/sentry";
+import { INVALID_TOKEN } from "~constants/responseCodes";
+import redisClient from "~services/redis";
+import AuthenticationError from "~utils/errors/AuthenticationError";
+import jwt from "~utils/jwt";
 
 const contextMiddleware = async (
   req: Request,
