@@ -1,3 +1,4 @@
+# Must be specified for codegen
 scalar JWT
 scalar URL
 scalar Locale
