@@ -1,4 +1,4 @@
-# Apollo GraphQL Express Server Template
+# Uni Backend Server
 
 [![fork with dotenv-vault](https://badge.dotenv.org/fork.svg?r=1)](https://vault.dotenv.org/project/vlt_8bdf75ce450eade46ab48df564cb8e608e2a841958474f622d78e94340fc85a1/example)
 
