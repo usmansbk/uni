@@ -93,6 +93,34 @@ export enum AuthStrategy {
   Owner = 'owner'
 }
 
+export type EditEventInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']>;
+  id?: InputMaybe<Scalars['ID']>;
+  timetableId?: InputMaybe<Scalars['ID']>;
+  title: Scalars['NonEmptyString'];
+};
+
+export type EditTimetableInput = {
+  description?: InputMaybe<Scalars['NonEmptyString']>;
+  events?: InputMaybe<Array<InputMaybe<EditEventInput>>>;
+  id?: InputMaybe<Scalars['ID']>;
+  title: Scalars['NonEmptyString'];
+};
+
+export type Event = {
+  __typename?: 'Event';
+  code?: Maybe<Scalars['ID']>;
+  createdAt: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  isOwner: Scalars['Boolean'];
+  owner: User;
+  recurrence?: Maybe<Recurrence>;
+  timetable: Timetable;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export enum Frequency {
   Daily = 'DAILY',
   Monthly = 'MONTHLY',
@@ -102,8 +130,15 @@ export enum Frequency {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createTimetable?: Maybe<Timetable>;
   loginWithSocialProvider: AuthPayload;
   updateProfile: User;
+  updateTimetable?: Maybe<Timetable>;
+};
+
+
+export type MutationCreateTimetableArgs = {
+  input: EditTimetableInput;
 };
 
 
@@ -116,20 +151,33 @@ export type MutationUpdateProfileArgs = {
   input: UpdateUserProfileInput;
 };
 
+
+export type MutationUpdateTimetableArgs = {
+  input: EditTimetableInput;
+};
+
 export type Query = {
   __typename?: 'Query';
+  getTimetableById: Timetable;
   me: User;
+};
+
+
+export type QueryGetTimetableByIdArgs = {
+  id: Scalars['ID'];
 };
 
 export type Recurrence = {
   __typename?: 'Recurrence';
   freq: Frequency;
   interval: Scalars['Int'];
+  until?: Maybe<Scalars['Date']>;
 };
 
 export type RecurrenceInput = {
   freq: Frequency;
   interval: Scalars['PositiveInt'];
+  until?: InputMaybe<Scalars['Date']>;
 };
 
 export type SocialLoginInput = {
@@ -140,6 +188,19 @@ export type SocialLoginInput = {
 export enum SocialProvider {
   Google = 'GOOGLE'
 }
+
+export type Timetable = {
+  __typename?: 'Timetable';
+  code?: Maybe<Scalars['ID']>;
+  createdAt: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  events: Array<Maybe<Event>>;
+  id: Scalars['ID'];
+  isOwner: Scalars['Boolean'];
+  owner: User;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
 
 export type UpdateUserProfileInput = {
   firstName: Scalars['NonEmptyString'];
@@ -251,7 +312,10 @@ export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Duration: ResolverTypeWrapper<Scalars['Duration']>;
+  EditEventInput: EditEventInput;
+  EditTimetableInput: EditTimetableInput;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']>;
+  Event: ResolverTypeWrapper<Event>;
   Frequency: Frequency;
   GUID: ResolverTypeWrapper<Scalars['GUID']>;
   HSL: ResolverTypeWrapper<Scalars['HSL']>;
@@ -305,6 +369,7 @@ export type ResolversTypes = {
   Time: ResolverTypeWrapper<Scalars['Time']>;
   TimeZone: ResolverTypeWrapper<Scalars['TimeZone']>;
   Timestamp: ResolverTypeWrapper<Scalars['Timestamp']>;
+  Timetable: ResolverTypeWrapper<Timetable>;
   URL: ResolverTypeWrapper<Scalars['URL']>;
   USCurrency: ResolverTypeWrapper<Scalars['USCurrency']>;
   UUID: ResolverTypeWrapper<Scalars['UUID']>;
@@ -331,7 +396,10 @@ export type ResolversParentTypes = {
   Date: Scalars['Date'];
   DateTime: Scalars['DateTime'];
   Duration: Scalars['Duration'];
+  EditEventInput: EditEventInput;
+  EditTimetableInput: EditTimetableInput;
   EmailAddress: Scalars['EmailAddress'];
+  Event: Event;
   GUID: Scalars['GUID'];
   HSL: Scalars['HSL'];
   HSLA: Scalars['HSLA'];
@@ -383,6 +451,7 @@ export type ResolversParentTypes = {
   Time: Scalars['Time'];
   TimeZone: Scalars['TimeZone'];
   Timestamp: Scalars['Timestamp'];
+  Timetable: Timetable;
   URL: Scalars['URL'];
   USCurrency: Scalars['USCurrency'];
   UUID: Scalars['UUID'];
@@ -448,6 +517,20 @@ export interface DurationScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['EmailAddress'], any> {
   name: 'EmailAddress';
 }
+
+export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  recurrence?: Resolver<Maybe<ResolversTypes['Recurrence']>, ParentType, ContextType>;
+  timetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export interface GuidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['GUID'], any> {
   name: 'GUID';
@@ -538,8 +621,10 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationCreateTimetableArgs, 'input'>>;
   loginWithSocialProvider?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginWithSocialProviderArgs, 'input'>>;
   updateProfile?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateProfileArgs, 'input'>>;
+  updateTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationUpdateTimetableArgs, 'input'>>;
 };
 
 export interface NegativeFloatScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NegativeFloat'], any> {
@@ -595,6 +680,7 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getTimetableById?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<QueryGetTimetableByIdArgs, 'id'>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
@@ -609,6 +695,7 @@ export interface RgbaScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type RecurrenceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Recurrence'] = ResolversParentTypes['Recurrence']> = {
   freq?: Resolver<ResolversTypes['Frequency'], ParentType, ContextType>;
   interval?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  until?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -635,6 +722,19 @@ export interface TimeZoneScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
   name: 'Timestamp';
 }
+
+export type TimetableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Timetable'] = ResolversParentTypes['Timetable']> = {
+  code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  events?: Resolver<Array<Maybe<ResolversTypes['Event']>>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export interface UrlScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['URL'], any> {
   name: 'URL';
@@ -692,6 +792,7 @@ export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
   Duration?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
+  Event?: EventResolvers<ContextType>;
   GUID?: GraphQLScalarType;
   HSL?: GraphQLScalarType;
   HSLA?: GraphQLScalarType;
@@ -738,6 +839,7 @@ export type Resolvers<ContextType = any> = {
   Time?: GraphQLScalarType;
   TimeZone?: GraphQLScalarType;
   Timestamp?: GraphQLScalarType;
+  Timetable?: TimetableResolvers<ContextType>;
   URL?: GraphQLScalarType;
   USCurrency?: GraphQLScalarType;
   UUID?: GraphQLScalarType;

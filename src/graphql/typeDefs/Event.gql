@@ -1,0 +1,19 @@
+type Event {
+  id: ID!
+  title: String!
+  description: String
+  code: ID
+  timetable: Timetable!
+  owner: User!
+  isOwner: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  recurrence: Recurrence
+}
+
+input EditEventInput {
+  id: ID
+  title: NonEmptyString!
+  description: NonEmptyString
+  timetableId: ID
+}

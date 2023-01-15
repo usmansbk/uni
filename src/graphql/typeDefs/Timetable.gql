@@ -1,0 +1,27 @@
+type Timetable {
+  id: ID!
+  title: String!
+  description: String
+  code: ID
+  events: [Event]!
+  owner: User!
+  isOwner: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  getTimetableById(id: ID!): Timetable!
+}
+
+input EditTimetableInput {
+  id: ID
+  title: NonEmptyString!
+  description: NonEmptyString
+  events: [EditEventInput]
+}
+
+type Mutation {
+  createTimetable(input: EditTimetableInput!): Timetable @auth
+  updateTimetable(input: EditTimetableInput!): Timetable @auth
+}

@@ -1,11 +1,13 @@
 type Recurrence {
   freq: Frequency!
   interval: Int!
+  until: Date
 }
 
 input RecurrenceInput {
   freq: Frequency!
   interval: PositiveInt!
+  until: Date
 }
 
 enum Frequency {
