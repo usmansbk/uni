@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler } from "express";
+import logger from "~utils/logger";
 import { INTERNAL_SERVER_ERROR } from "~constants/errors";
 import AuthenticationError from "~utils/errors/AuthenticationError";
 import ForbiddenError from "~utils/errors/ForbiddenError";
@@ -25,6 +26,7 @@ const errorHandlerMiddleware: ErrorRequestHandler = (
     message = req.t(INTERNAL_SERVER_ERROR, { ns: "errors" });
   }
 
+  logger.error({ error });
   res.status(status).json({
     message,
   });

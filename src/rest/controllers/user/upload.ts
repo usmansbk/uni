@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import uploader from "~rest/utils/uploader";
 import { UploadFile } from "~types";
 import QueryError from "~utils/errors/QueryError";
-import logger from "~utils/logger";
 import {
   FILE_UPLOADED,
   FILE_UPLOAD_FAILED,
@@ -68,12 +67,9 @@ export default function uploadPicture(
             picture: fileUrl(avatar, { width: 400, height: 400 }),
           });
         } else {
-          res.status(400).json({
-            message: t(NO_FILE_TO_UPLOAD),
-          });
+          next(new QueryError(t(NO_FILE_TO_UPLOAD)));
         }
       } catch (e) {
-        logger.error({ e });
         next(new QueryError(t(FILE_UPLOAD_FAILED), e as Error));
       }
     }
