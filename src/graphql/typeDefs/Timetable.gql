@@ -18,7 +18,7 @@ input EditTimetableInput {
   id: ID
   title: NonEmptyString!
   description: NonEmptyString
-  events: [EditEventInput]
+  events: [EditEventInput]!
 }
 
 type Mutation {
