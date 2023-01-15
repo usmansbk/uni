@@ -23,7 +23,7 @@ export default function uploadPicture(
       context: { prismaClient, t, currentUser },
     } = req;
     if (err) {
-      next(err);
+      next(new QueryError(err.message));
     } else {
       try {
         if (file) {
