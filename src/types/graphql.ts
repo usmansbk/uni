@@ -95,14 +95,16 @@ export enum AuthStrategy {
 
 export type EditEventInput = {
   description?: InputMaybe<Scalars['NonEmptyString']>;
+  endAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['ID']>;
+  startAt: Scalars['DateTime'];
   timetableId?: InputMaybe<Scalars['ID']>;
   title: Scalars['NonEmptyString'];
 };
 
 export type EditTimetableInput = {
   description?: InputMaybe<Scalars['NonEmptyString']>;
-  events?: InputMaybe<Array<InputMaybe<EditEventInput>>>;
+  events: Array<InputMaybe<EditEventInput>>;
   id?: InputMaybe<Scalars['ID']>;
   title: Scalars['NonEmptyString'];
 };
@@ -112,10 +114,12 @@ export type Event = {
   code?: Maybe<Scalars['ID']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
+  endAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   isOwner: Scalars['Boolean'];
   owner: User;
   recurrence?: Maybe<Recurrence>;
+  startAt: Scalars['DateTime'];
   timetable: Timetable;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -522,10 +526,12 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  endAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   recurrence?: Resolver<Maybe<ResolversTypes['Recurrence']>, ParentType, ContextType>;
+  startAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   timetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
