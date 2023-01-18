@@ -95,9 +95,10 @@ export enum AuthStrategy {
 
 export type EditEventInput = {
   description?: InputMaybe<Scalars['NonEmptyString']>;
-  endAt?: InputMaybe<Scalars['DateTime']>;
+  endTime?: InputMaybe<Scalars['Time']>;
   id?: InputMaybe<Scalars['ID']>;
-  startAt: Scalars['DateTime'];
+  startDate: Scalars['Date'];
+  startTime?: InputMaybe<Scalars['Time']>;
   timetableId?: InputMaybe<Scalars['ID']>;
   title: Scalars['NonEmptyString'];
 };
@@ -114,12 +115,13 @@ export type Event = {
   code?: Maybe<Scalars['ID']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
-  endAt?: Maybe<Scalars['DateTime']>;
+  endTime?: Maybe<Scalars['Time']>;
   id: Scalars['ID'];
   isOwner: Scalars['Boolean'];
   owner: User;
   recurrence?: Maybe<Recurrence>;
-  startAt: Scalars['DateTime'];
+  startDate: Scalars['Date'];
+  startTime?: Maybe<Scalars['Time']>;
   timetable: Timetable;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -526,12 +528,13 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  endAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  endTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   recurrence?: Resolver<Maybe<ResolversTypes['Recurrence']>, ParentType, ContextType>;
-  startAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  startDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  startTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
   timetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
