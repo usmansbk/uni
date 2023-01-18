@@ -3,8 +3,9 @@ type Event {
   title: String!
   description: String
   code: ID
-  startAt: DateTime!
-  endAt: DateTime
+  startDate: Date!
+  startTime: Time
+  endTime: Time
   timetable: Timetable!
   owner: User!
   isOwner: Boolean!
@@ -17,7 +18,8 @@ input EditEventInput {
   id: ID
   title: NonEmptyString!
   description: NonEmptyString
-  startAt: DateTime!
-  endAt: DateTime
+  startDate: Date!
+  startTime: Time
+  endTime: Time
   timetableId: ID
 }

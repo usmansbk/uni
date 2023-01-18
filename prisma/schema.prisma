@@ -18,6 +18,7 @@ model User {
   firstName         String
   lastName          String?
   language          String?
+  timezone          String?
   avatar            File?
   pictureUrl        String?
   createdAt         DateTime         @default(now())
@@ -49,8 +50,10 @@ model Event {
   title       String
   description String?
   code        String?    @unique @default(cuid())
-  startAt     DateTime
-  endAt       DateTime?
+  startDate   DateTime
+  startTime   String?
+  endTime     String?
+  timezone    String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   timetable   Timetable? @relation(fields: [timetableId], references: [id])
