@@ -1,6 +1,0 @@
-enum RepeatFrequency {
-  DAILY
-  WEEKLY
-  MONTHLY
-  YEARLY
-}

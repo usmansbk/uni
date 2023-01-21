@@ -1,3 +1,10 @@
+enum RepeatFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
 type Event {
   id: ID!
   title: String!
