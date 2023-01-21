@@ -15,7 +15,6 @@ type Event {
   timetable: Timetable!
   owner: User!
   isOwner: Boolean!
-  isCancelled: Boolean!
   cancelledDates: [Date]!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -31,4 +30,17 @@ input EditEventInput {
   endTime: Time
   timetableId: ID
   repeat: RepeatFrequency
+}
+
+type Query {
+  getEventById(id: ID!): Event! @auth
+}
+
+type Mutation {
+  createEvent(input: EditEventInput!): Event! @auth
+  updateEvent(input: EditEventInput!): Event! @auth
+  deleteEvent(id: ID!, reason: NonEmptyString): Event! @auth
+  cancelEvent(date: Date!): Event! @auth
+  addEventToBookmarks(id: ID!): Event! @auth
+  removeEventFromBookmarks(id: ID!): Event! @auth
 }

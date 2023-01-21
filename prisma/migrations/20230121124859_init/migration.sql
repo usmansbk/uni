@@ -2,10 +2,13 @@
 CREATE TYPE "EventType" AS ENUM ('DEFAULT');
 
 -- CreateEnum
+CREATE TYPE "EventStatus" AS ENUM ('CANCELLED');
+
+-- CreateEnum
 CREATE TYPE "RepeatFrequency" AS ENUM ('DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY');
 
 -- CreateEnum
-CREATE TYPE "EventStatus" AS ENUM ('CANCELLED');
+CREATE TYPE "TimetableStatus" AS ENUM ('ARCHIVED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -51,7 +54,7 @@ CREATE TABLE "Event" (
     "ownerId" TEXT NOT NULL,
     "type" "EventType" DEFAULT 'DEFAULT',
     "repeat" "RepeatFrequency",
-    "isCancelled" BOOLEAN DEFAULT false,
+    "status" "EventStatus",
     "cancelledDates" TIMESTAMP(3)[],
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
@@ -63,6 +66,7 @@ CREATE TABLE "Timetable" (
     "title" TEXT NOT NULL,
     "description" TEXT,
     "code" TEXT,
+    "status" "TimetableStatus",
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "ownerId" TEXT NOT NULL,

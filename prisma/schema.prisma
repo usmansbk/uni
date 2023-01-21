@@ -44,15 +44,15 @@ enum EventType {
   DEFAULT
 }
 
+enum EventStatus {
+  CANCELLED
+}
+
 enum RepeatFrequency {
   DAILY
   WEEKLY
   MONTHLY
   YEARLY
-}
-
-enum EventStatus {
-  CANCELLED
 }
 
 model Event {
@@ -70,8 +70,12 @@ model Event {
   ownerId        String
   type           EventType?       @default(DEFAULT)
   repeat         RepeatFrequency?
-  isCancelled    Boolean?         @default(false)
+  status         EventStatus?
   cancelledDates DateTime[]
+}
+
+enum TimetableStatus {
+  ARCHIVED
 }
 
 model Timetable {
@@ -79,6 +83,7 @@ model Timetable {
   title       String
   description String?
   code        String?          @unique @default(cuid())
+  status      TimetableStatus?
   events      Event[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt

@@ -118,7 +118,6 @@ export type Event = {
   description?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['Time']>;
   id: Scalars['ID'];
-  isCancelled: Scalars['Boolean'];
   isOwner: Scalars['Boolean'];
   owner: User;
   repeat?: Maybe<RepeatFrequency>;
@@ -131,16 +130,52 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createTimetable?: Maybe<Timetable>;
-  deleteTimetable?: Maybe<Timetable>;
+  addEventToBookmarks: Event;
+  archiveTimetable: Timetable;
+  cancelEvent: Event;
+  createEvent: Event;
+  createTimetable: Timetable;
+  deleteEvent: Event;
+  deleteTimetable: Timetable;
   loginWithSocialProvider: AuthPayload;
+  removeEventFromBookmarks: Event;
+  saveTimetable: Timetable;
+  unarchiveTimetable: Timetable;
+  unsaveTimetable: Timetable;
+  updateEvent: Event;
   updateProfile: User;
-  updateTimetable?: Maybe<Timetable>;
+  updateTimetable: Timetable;
+};
+
+
+export type MutationAddEventToBookmarksArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationArchiveTimetableArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationCancelEventArgs = {
+  date: Scalars['Date'];
+};
+
+
+export type MutationCreateEventArgs = {
+  input: EditEventInput;
 };
 
 
 export type MutationCreateTimetableArgs = {
   input: EditTimetableInput;
+};
+
+
+export type MutationDeleteEventArgs = {
+  id: Scalars['ID'];
+  reason?: InputMaybe<Scalars['NonEmptyString']>;
 };
 
 
@@ -155,6 +190,31 @@ export type MutationLoginWithSocialProviderArgs = {
 };
 
 
+export type MutationRemoveEventFromBookmarksArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationSaveTimetableArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationUnarchiveTimetableArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationUnsaveTimetableArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateEventArgs = {
+  input: EditEventInput;
+};
+
+
 export type MutationUpdateProfileArgs = {
   input: UpdateUserProfileInput;
 };
@@ -166,8 +226,14 @@ export type MutationUpdateTimetableArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getEventById: Event;
   getTimetableById: Timetable;
   me: User;
+};
+
+
+export type QueryGetEventByIdArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -520,7 +586,6 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  isCancelled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   repeat?: Resolver<Maybe<ResolversTypes['RepeatFrequency']>, ParentType, ContextType>;
@@ -621,11 +686,21 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationCreateTimetableArgs, 'input'>>;
-  deleteTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationDeleteTimetableArgs, 'id'>>;
+  addEventToBookmarks?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationAddEventToBookmarksArgs, 'id'>>;
+  archiveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationArchiveTimetableArgs, 'id'>>;
+  cancelEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCancelEventArgs, 'date'>>;
+  createEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCreateEventArgs, 'input'>>;
+  createTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationCreateTimetableArgs, 'input'>>;
+  deleteEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationDeleteEventArgs, 'id'>>;
+  deleteTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationDeleteTimetableArgs, 'id'>>;
   loginWithSocialProvider?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginWithSocialProviderArgs, 'input'>>;
+  removeEventFromBookmarks?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationRemoveEventFromBookmarksArgs, 'id'>>;
+  saveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationSaveTimetableArgs, 'id'>>;
+  unarchiveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationUnarchiveTimetableArgs, 'id'>>;
+  unsaveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationUnsaveTimetableArgs, 'id'>>;
+  updateEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationUpdateEventArgs, 'input'>>;
   updateProfile?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateProfileArgs, 'input'>>;
-  updateTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationUpdateTimetableArgs, 'input'>>;
+  updateTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationUpdateTimetableArgs, 'input'>>;
 };
 
 export interface NegativeFloatScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NegativeFloat'], any> {
@@ -681,6 +756,7 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getEventById?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<QueryGetEventByIdArgs, 'id'>>;
   getTimetableById?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<QueryGetTimetableByIdArgs, 'id'>>;
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };

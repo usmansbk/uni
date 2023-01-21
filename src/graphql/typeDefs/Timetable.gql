@@ -10,10 +10,6 @@ type Timetable {
   updatedAt: DateTime
 }
 
-type Query {
-  getTimetableById(id: ID!): Timetable!
-}
-
 input EditTimetableInput {
   id: ID
   title: NonEmptyString!
@@ -21,8 +17,16 @@ input EditTimetableInput {
   events: [EditEventInput]!
 }
 
+type Query {
+  getTimetableById(id: ID!): Timetable! @auth
+}
+
 type Mutation {
-  createTimetable(input: EditTimetableInput!): Timetable @auth
-  updateTimetable(input: EditTimetableInput!): Timetable @auth
-  deleteTimetable(id: ID!, reason: NonEmptyString): Timetable @auth
+  createTimetable(input: EditTimetableInput!): Timetable! @auth
+  updateTimetable(input: EditTimetableInput!): Timetable! @auth
+  deleteTimetable(id: ID!, reason: NonEmptyString): Timetable! @auth
+  archiveTimetable(id: ID!): Timetable! @auth
+  unarchiveTimetable(id: ID!): Timetable! @auth
+  saveTimetable(id: ID!): Timetable! @auth
+  unsaveTimetable(id: ID!): Timetable! @auth
 }
