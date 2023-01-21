@@ -12,7 +12,7 @@ type Event {
   startDate: Date!
   startTime: Time
   endTime: Time
-  timetable: Timetable!
+  timetable: Timetable
   owner: User!
   isOwner: Boolean!
   cancelledDates: [Date]!
