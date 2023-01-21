@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "EventType" AS ENUM ('DEFAULT');
 
+-- CreateEnum
+CREATE TYPE "RepeatFrequency" AS ENUM ('DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -9,7 +12,6 @@ CREATE TABLE "User" (
     "firstName" TEXT NOT NULL,
     "lastName" TEXT,
     "language" TEXT,
-    "timezone" TEXT,
     "pictureUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -37,16 +39,15 @@ CREATE TABLE "Event" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "code" TEXT,
     "startDate" TIMESTAMP(3) NOT NULL,
     "startTime" TEXT,
     "endTime" TEXT,
-    "timezone" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "timetableId" TEXT,
     "ownerId" TEXT NOT NULL,
     "type" "EventType" DEFAULT 'DEFAULT',
+    "repeat" "RepeatFrequency",
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
@@ -79,9 +80,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "File_userAvatarId_key" ON "File"("userAvatarId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Event_code_key" ON "Event"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Timetable_code_key" ON "Timetable"("code");

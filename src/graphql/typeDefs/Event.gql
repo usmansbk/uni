@@ -2,7 +2,6 @@ type Event {
   id: ID!
   title: String!
   description: String
-  code: ID
   startDate: Date!
   startTime: Time
   endTime: Time
@@ -11,7 +10,7 @@ type Event {
   isOwner: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime
-  recurrence: Recurrence
+  repeat: RepeatFrequency
 }
 
 input EditEventInput {
@@ -22,4 +21,5 @@ input EditEventInput {
   startTime: Time
   endTime: Time
   timetableId: ID
+  repeat: RepeatFrequency
 }

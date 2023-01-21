@@ -18,7 +18,6 @@ model User {
   firstName         String
   lastName          String?
   language          String?
-  timezone          String?
   avatar            File?
   pictureUrl        String?
   createdAt         DateTime         @default(now())
@@ -45,22 +44,28 @@ enum EventType {
   DEFAULT
 }
 
+enum RepeatFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
 model Event {
-  id          String     @id @default(uuid())
+  id          String           @id @default(uuid())
   title       String
   description String?
-  code        String?    @unique @default(cuid())
   startDate   DateTime
   startTime   String?
   endTime     String?
-  timezone    String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  timetable   Timetable? @relation(fields: [timetableId], references: [id])
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  timetable   Timetable?       @relation(fields: [timetableId], references: [id])
   timetableId String?
-  owner       User       @relation(fields: [ownerId], references: [id])
+  owner       User             @relation(fields: [ownerId], references: [id])
   ownerId     String
-  type        EventType? @default(DEFAULT)
+  type        EventType?       @default(DEFAULT)
+  repeat      RepeatFrequency?
 }
 
 model Timetable {

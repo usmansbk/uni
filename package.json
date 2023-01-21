@@ -69,9 +69,9 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@apollo/server": "^4.3.0",
-    "@aws-sdk/abort-controller": "^3.226.0",
-    "@aws-sdk/client-s3": "^3.252.0",
+    "@apollo/server": "^4.3.1",
+    "@aws-sdk/abort-controller": "^3.254.0",
+    "@aws-sdk/client-s3": "^3.254.0",
     "@graphql-tools/load-files": "^6.6.1",
     "@graphql-tools/merge": "^8.3.15",
     "@graphql-tools/schema": "^9.0.13",

@@ -97,6 +97,7 @@ export type EditEventInput = {
   description?: InputMaybe<Scalars['NonEmptyString']>;
   endTime?: InputMaybe<Scalars['Time']>;
   id?: InputMaybe<Scalars['ID']>;
+  repeat?: InputMaybe<RepeatFrequency>;
   startDate: Scalars['Date'];
   startTime?: InputMaybe<Scalars['Time']>;
   timetableId?: InputMaybe<Scalars['ID']>;
@@ -112,27 +113,19 @@ export type EditTimetableInput = {
 
 export type Event = {
   __typename?: 'Event';
-  code?: Maybe<Scalars['ID']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['Time']>;
   id: Scalars['ID'];
   isOwner: Scalars['Boolean'];
   owner: User;
-  recurrence?: Maybe<Recurrence>;
+  repeat?: Maybe<RepeatFrequency>;
   startDate: Scalars['Date'];
   startTime?: Maybe<Scalars['Time']>;
   timetable: Timetable;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
-
-export enum Frequency {
-  Daily = 'DAILY',
-  Monthly = 'MONTHLY',
-  Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
-}
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -173,18 +166,12 @@ export type QueryGetTimetableByIdArgs = {
   id: Scalars['ID'];
 };
 
-export type Recurrence = {
-  __typename?: 'Recurrence';
-  freq: Frequency;
-  interval: Scalars['Int'];
-  until?: Maybe<Scalars['Date']>;
-};
-
-export type RecurrenceInput = {
-  freq: Frequency;
-  interval: Scalars['PositiveInt'];
-  until?: InputMaybe<Scalars['Date']>;
-};
+export enum RepeatFrequency {
+  Daily = 'DAILY',
+  Monthly = 'MONTHLY',
+  Weekly = 'WEEKLY',
+  Yearly = 'YEARLY'
+}
 
 export type SocialLoginInput = {
   code: Scalars['String'];
@@ -322,7 +309,6 @@ export type ResolversTypes = {
   EditTimetableInput: EditTimetableInput;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']>;
   Event: ResolverTypeWrapper<Event>;
-  Frequency: Frequency;
   GUID: ResolverTypeWrapper<Scalars['GUID']>;
   HSL: ResolverTypeWrapper<Scalars['HSL']>;
   HSLA: ResolverTypeWrapper<Scalars['HSLA']>;
@@ -335,7 +321,6 @@ export type ResolversTypes = {
   IPv6: ResolverTypeWrapper<Scalars['IPv6']>;
   ISBN: ResolverTypeWrapper<Scalars['ISBN']>;
   ISO8601Duration: ResolverTypeWrapper<Scalars['ISO8601Duration']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
   JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
   JWT: ResolverTypeWrapper<Scalars['JWT']>;
@@ -364,8 +349,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   RGB: ResolverTypeWrapper<Scalars['RGB']>;
   RGBA: ResolverTypeWrapper<Scalars['RGBA']>;
-  Recurrence: ResolverTypeWrapper<Recurrence>;
-  RecurrenceInput: RecurrenceInput;
+  RepeatFrequency: RepeatFrequency;
   RoutingNumber: ResolverTypeWrapper<Scalars['RoutingNumber']>;
   SafeInt: ResolverTypeWrapper<Scalars['SafeInt']>;
   SemVer: ResolverTypeWrapper<Scalars['SemVer']>;
@@ -418,7 +402,6 @@ export type ResolversParentTypes = {
   IPv6: Scalars['IPv6'];
   ISBN: Scalars['ISBN'];
   ISO8601Duration: Scalars['ISO8601Duration'];
-  Int: Scalars['Int'];
   JSON: Scalars['JSON'];
   JSONObject: Scalars['JSONObject'];
   JWT: Scalars['JWT'];
@@ -447,8 +430,6 @@ export type ResolversParentTypes = {
   Query: {};
   RGB: Scalars['RGB'];
   RGBA: Scalars['RGBA'];
-  Recurrence: Recurrence;
-  RecurrenceInput: RecurrenceInput;
   RoutingNumber: Scalars['RoutingNumber'];
   SafeInt: Scalars['SafeInt'];
   SemVer: Scalars['SemVer'];
@@ -525,14 +506,13 @@ export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<Resolv
 }
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
-  code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  recurrence?: Resolver<Maybe<ResolversTypes['Recurrence']>, ParentType, ContextType>;
+  repeat?: Resolver<Maybe<ResolversTypes['RepeatFrequency']>, ParentType, ContextType>;
   startDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   startTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
   timetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType>;
@@ -701,13 +681,6 @@ export interface RgbaScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'RGBA';
 }
 
-export type RecurrenceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Recurrence'] = ResolversParentTypes['Recurrence']> = {
-  freq?: Resolver<ResolversTypes['Frequency'], ParentType, ContextType>;
-  interval?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  until?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export interface RoutingNumberScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['RoutingNumber'], any> {
   name: 'RoutingNumber';
 }
@@ -841,7 +814,6 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   RGB?: GraphQLScalarType;
   RGBA?: GraphQLScalarType;
-  Recurrence?: RecurrenceResolvers<ContextType>;
   RoutingNumber?: GraphQLScalarType;
   SafeInt?: GraphQLScalarType;
   SemVer?: GraphQLScalarType;
