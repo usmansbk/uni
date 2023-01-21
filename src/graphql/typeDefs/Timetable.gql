@@ -24,4 +24,5 @@ input EditTimetableInput {
 type Mutation {
   createTimetable(input: EditTimetableInput!): Timetable @auth
   updateTimetable(input: EditTimetableInput!): Timetable @auth
+  deleteTimetable(id: ID!, reason: NonEmptyString): Timetable @auth
 }
