@@ -15,6 +15,8 @@ type Event {
   timetable: Timetable!
   owner: User!
   isOwner: Boolean!
+  isCancelled: Boolean!
+  cancelledDates: [Date]!
   createdAt: DateTime!
   updatedAt: DateTime
   repeat: RepeatFrequency

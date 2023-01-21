@@ -51,21 +51,27 @@ enum RepeatFrequency {
   YEARLY
 }
 
+enum EventStatus {
+  CANCELLED
+}
+
 model Event {
-  id          String           @id @default(uuid())
-  title       String
-  description String?
-  startDate   DateTime
-  startTime   String?
-  endTime     String?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  timetable   Timetable?       @relation(fields: [timetableId], references: [id])
-  timetableId String?
-  owner       User             @relation(fields: [ownerId], references: [id])
-  ownerId     String
-  type        EventType?       @default(DEFAULT)
-  repeat      RepeatFrequency?
+  id             String           @id @default(uuid())
+  title          String
+  description    String?
+  startDate      DateTime
+  startTime      String?
+  endTime        String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  timetable      Timetable?       @relation(fields: [timetableId], references: [id])
+  timetableId    String?
+  owner          User             @relation(fields: [ownerId], references: [id])
+  ownerId        String
+  type           EventType?       @default(DEFAULT)
+  repeat         RepeatFrequency?
+  isCancelled    Boolean?         @default(false)
+  cancelledDates DateTime[]
 }
 
 model Timetable {

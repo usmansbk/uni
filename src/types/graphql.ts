@@ -113,10 +113,12 @@ export type EditTimetableInput = {
 
 export type Event = {
   __typename?: 'Event';
+  cancelledDates: Array<Maybe<Scalars['Date']>>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['Time']>;
   id: Scalars['ID'];
+  isCancelled: Scalars['Boolean'];
   isOwner: Scalars['Boolean'];
   owner: User;
   repeat?: Maybe<RepeatFrequency>;
@@ -130,6 +132,7 @@ export type Event = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTimetable?: Maybe<Timetable>;
+  deleteTimetable?: Maybe<Timetable>;
   loginWithSocialProvider: AuthPayload;
   updateProfile: User;
   updateTimetable?: Maybe<Timetable>;
@@ -138,6 +141,12 @@ export type Mutation = {
 
 export type MutationCreateTimetableArgs = {
   input: EditTimetableInput;
+};
+
+
+export type MutationDeleteTimetableArgs = {
+  id: Scalars['ID'];
+  reason?: InputMaybe<Scalars['NonEmptyString']>;
 };
 
 
@@ -506,10 +515,12 @@ export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<Resolv
 }
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  cancelledDates?: Resolver<Array<Maybe<ResolversTypes['Date']>>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isCancelled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   repeat?: Resolver<Maybe<ResolversTypes['RepeatFrequency']>, ParentType, ContextType>;
@@ -611,6 +622,7 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationCreateTimetableArgs, 'input'>>;
+  deleteTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationDeleteTimetableArgs, 'id'>>;
   loginWithSocialProvider?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginWithSocialProviderArgs, 'input'>>;
   updateProfile?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateProfileArgs, 'input'>>;
   updateTimetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType, RequireFields<MutationUpdateTimetableArgs, 'input'>>;
