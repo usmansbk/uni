@@ -7,6 +7,7 @@ enum RepeatFrequency {
 
 type Event {
   id: ID!
+  code: ID
   title: String!
   description: String
   startDate: Date!
@@ -41,6 +42,4 @@ type Mutation {
   updateEvent(input: EditEventInput!): Event! @auth
   deleteEvent(id: ID!, reason: NonEmptyString): Event! @auth
   cancelEvent(date: Date!): Event! @auth
-  addEventToBookmarks(id: ID!): Event! @auth
-  removeEventFromBookmarks(id: ID!): Event! @auth
 }

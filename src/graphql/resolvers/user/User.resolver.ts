@@ -28,5 +28,20 @@ export default {
 
       return user.pictureUrl;
     },
+    async timetables(user: User, _args: never, context: AppContext) {
+      const { prismaClient } = context;
+
+      return prismaClient.timetable.findMany({
+        where: {
+          OR: [
+            {
+              owner: {
+                id: user.id,
+              },
+            },
+          ],
+        },
+      });
+    },
   },
 };

@@ -10,6 +10,8 @@ type User {
   isMe: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime
+
+  timetables: [Timetable]!
 }
 
 type Query {

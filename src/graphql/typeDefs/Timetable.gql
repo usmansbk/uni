@@ -25,8 +25,6 @@ type Mutation {
   createTimetable(input: EditTimetableInput!): Timetable! @auth
   updateTimetable(input: EditTimetableInput!): Timetable! @auth
   deleteTimetable(id: ID!, reason: NonEmptyString): Timetable! @auth
-  archiveTimetable(id: ID!): Timetable! @auth
-  unarchiveTimetable(id: ID!): Timetable! @auth
   saveTimetable(id: ID!): Timetable! @auth
   unsaveTimetable(id: ID!): Timetable! @auth
 }
