@@ -17,13 +17,19 @@ input EditTimetableInput {
   events: [EditEventInput]!
 }
 
+input UpdateTimetableInput {
+  create: [EditEventInput]!
+  update: [EditEventInput]!
+  delete: [ID]!
+}
+
 type Query {
   getTimetableById(id: ID!): Timetable! @auth
 }
 
 type Mutation {
   createTimetable(input: EditTimetableInput!): Timetable! @auth
-  updateTimetable(input: EditTimetableInput!): Timetable! @auth
+  updateTimetable(input: UpdateTimetableInput!): Timetable! @auth
   deleteTimetable(id: ID!, reason: NonEmptyString): Timetable! @auth
   saveTimetable(id: ID!): Timetable! @auth
   unsaveTimetable(id: ID!): Timetable! @auth

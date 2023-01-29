@@ -95,11 +95,11 @@ export enum AuthStrategy {
 
 export type EditEventInput = {
   description?: InputMaybe<Scalars['NonEmptyString']>;
-  endTime?: InputMaybe<Scalars['Time']>;
+  endTime?: InputMaybe<Scalars['LocalTime']>;
   id?: InputMaybe<Scalars['ID']>;
   repeat?: InputMaybe<RepeatFrequency>;
   startDate: Scalars['Date'];
-  startTime?: InputMaybe<Scalars['Time']>;
+  startTime?: InputMaybe<Scalars['LocalTime']>;
   timetableId?: InputMaybe<Scalars['ID']>;
   title: Scalars['NonEmptyString'];
 };
@@ -114,47 +114,34 @@ export type EditTimetableInput = {
 export type Event = {
   __typename?: 'Event';
   cancelledDates: Array<Maybe<Scalars['Date']>>;
+  code?: Maybe<Scalars['ID']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
-  endTime?: Maybe<Scalars['Time']>;
+  endTime?: Maybe<Scalars['LocalTime']>;
   id: Scalars['ID'];
   isOwner: Scalars['Boolean'];
   owner: User;
   repeat?: Maybe<RepeatFrequency>;
   startDate: Scalars['Date'];
-  startTime?: Maybe<Scalars['Time']>;
-  timetable: Timetable;
+  startTime?: Maybe<Scalars['LocalTime']>;
+  timetable?: Maybe<Timetable>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addEventToBookmarks: Event;
-  archiveTimetable: Timetable;
   cancelEvent: Event;
   createEvent: Event;
   createTimetable: Timetable;
   deleteEvent: Event;
   deleteTimetable: Timetable;
   loginWithSocialProvider: AuthPayload;
-  removeEventFromBookmarks: Event;
   saveTimetable: Timetable;
-  unarchiveTimetable: Timetable;
   unsaveTimetable: Timetable;
   updateEvent: Event;
   updateProfile: User;
   updateTimetable: Timetable;
-};
-
-
-export type MutationAddEventToBookmarksArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationArchiveTimetableArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -190,17 +177,7 @@ export type MutationLoginWithSocialProviderArgs = {
 };
 
 
-export type MutationRemoveEventFromBookmarksArgs = {
-  id: Scalars['ID'];
-};
-
-
 export type MutationSaveTimetableArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationUnarchiveTimetableArgs = {
   id: Scalars['ID'];
 };
 
@@ -221,7 +198,7 @@ export type MutationUpdateProfileArgs = {
 
 
 export type MutationUpdateTimetableArgs = {
-  input: EditTimetableInput;
+  input: UpdateTimetableInput;
 };
 
 export type Query = {
@@ -270,6 +247,12 @@ export type Timetable = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type UpdateTimetableInput = {
+  create: Array<InputMaybe<EditEventInput>>;
+  delete: Array<InputMaybe<Scalars['ID']>>;
+  update: Array<InputMaybe<EditEventInput>>;
+};
+
 export type UpdateUserProfileInput = {
   firstName: Scalars['NonEmptyString'];
   language?: InputMaybe<Scalars['Locale']>;
@@ -288,6 +271,7 @@ export type User = {
   language?: Maybe<Scalars['Locale']>;
   lastName: Scalars['String'];
   picture?: Maybe<Scalars['URL']>;
+  timetables: Array<Maybe<Timetable>>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -440,6 +424,7 @@ export type ResolversTypes = {
   UUID: ResolverTypeWrapper<Scalars['UUID']>;
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']>;
+  UpdateTimetableInput: UpdateTimetableInput;
   UpdateUserProfileInput: UpdateUserProfileInput;
   User: ResolverTypeWrapper<User>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']>;
@@ -519,6 +504,7 @@ export type ResolversParentTypes = {
   UUID: Scalars['UUID'];
   UnsignedFloat: Scalars['UnsignedFloat'];
   UnsignedInt: Scalars['UnsignedInt'];
+  UpdateTimetableInput: UpdateTimetableInput;
   UpdateUserProfileInput: UpdateUserProfileInput;
   User: User;
   UtcOffset: Scalars['UtcOffset'];
@@ -582,16 +568,17 @@ export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<Resolv
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
   cancelledDates?: Resolver<Array<Maybe<ResolversTypes['Date']>>, ParentType, ContextType>;
+  code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  endTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
+  endTime?: Resolver<Maybe<ResolversTypes['LocalTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   repeat?: Resolver<Maybe<ResolversTypes['RepeatFrequency']>, ParentType, ContextType>;
   startDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  startTime?: Resolver<Maybe<ResolversTypes['Time']>, ParentType, ContextType>;
-  timetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType>;
+  startTime?: Resolver<Maybe<ResolversTypes['LocalTime']>, ParentType, ContextType>;
+  timetable?: Resolver<Maybe<ResolversTypes['Timetable']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -686,17 +673,13 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addEventToBookmarks?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationAddEventToBookmarksArgs, 'id'>>;
-  archiveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationArchiveTimetableArgs, 'id'>>;
   cancelEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCancelEventArgs, 'date'>>;
   createEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCreateEventArgs, 'input'>>;
   createTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationCreateTimetableArgs, 'input'>>;
   deleteEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationDeleteEventArgs, 'id'>>;
   deleteTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationDeleteTimetableArgs, 'id'>>;
   loginWithSocialProvider?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginWithSocialProviderArgs, 'input'>>;
-  removeEventFromBookmarks?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationRemoveEventFromBookmarksArgs, 'id'>>;
   saveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationSaveTimetableArgs, 'id'>>;
-  unarchiveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationUnarchiveTimetableArgs, 'id'>>;
   unsaveTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationUnsaveTimetableArgs, 'id'>>;
   updateEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationUpdateEventArgs, 'input'>>;
   updateProfile?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateProfileArgs, 'input'>>;
@@ -837,6 +820,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   language?: Resolver<Maybe<ResolversTypes['Locale']>, ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   picture?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType, RequireFields<UserPictureArgs, 'height' | 'width'>>;
+  timetables?: Resolver<Array<Maybe<ResolversTypes['Timetable']>>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
