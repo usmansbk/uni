@@ -18,6 +18,8 @@ input EditTimetableInput {
 }
 
 input UpdateTimetableInput {
+  id: ID!
+  title: NonEmptyString!
   create: [EditEventInput]!
   update: [EditEventInput]!
   delete: [ID]!
