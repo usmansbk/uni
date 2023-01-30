@@ -83,6 +83,9 @@ CREATE UNIQUE INDEX "File_userAvatarId_key" ON "File"("userAvatarId");
 CREATE UNIQUE INDEX "Event_code_key" ON "Event"("code");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Timetable_code_key" ON "Timetable"("code");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "SavedTimetable_userId_timetableId_key" ON "SavedTimetable"("userId", "timetableId");
 
 -- AddForeignKey
