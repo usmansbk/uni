@@ -11,11 +11,13 @@ export default {
     ) {
       const { prismaClient, currentUser } = context;
 
-      const { title, events } = input;
+      const { title, description, events } = input;
 
       return prismaClient.timetable.create({
         data: {
           title,
+          description,
+          code: nanoid(10),
           owner: {
             connect: {
               id: currentUser!.id!,
@@ -41,7 +43,6 @@ export default {
                   endTime,
                   repeat,
                   ownerId: currentUser!.id!,
-                  code: nanoid(10),
                 };
               }),
             },
