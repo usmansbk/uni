@@ -1,18 +1,18 @@
 import { AUTHORIZATION_ERROR } from "~constants/errors";
-import { MutationDeleteTimetableArgs } from "~types/graphql";
+import { MutationDeleteEventArgs } from "~types/graphql";
 import { AppContext } from "~types/index";
 import QueryError from "~utils/errors/QueryError";
 
 export default {
   Mutation: {
-    async deleteTimetable(
+    async deleteEvent(
       _parent: unknown,
-      { id }: MutationDeleteTimetableArgs,
+      { id }: MutationDeleteEventArgs,
       context: AppContext
     ) {
       const { prismaClient, currentUser, t } = context;
 
-      const authorizedTimeble = await prismaClient.timetable.findFirst({
+      const authorizedEvent = await prismaClient.event.findFirst({
         where: {
           id,
           owner: {
@@ -21,13 +21,13 @@ export default {
         },
       });
 
-      if (!authorizedTimeble) {
+      if (!authorizedEvent) {
         throw new QueryError(t(AUTHORIZATION_ERROR));
       }
 
-      return prismaClient.timetable.delete({
+      return prismaClient.event.delete({
         where: {
-          id: authorizedTimeble.id,
+          id: authorizedEvent.id,
         },
       });
     },
