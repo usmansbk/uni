@@ -198,7 +198,7 @@ export type MutationUpdateProfileArgs = {
 
 
 export type MutationUpdateTimetableArgs = {
-  input: UpdateTimetableInput;
+  input: EditTimetableInput;
 };
 
 export type Query = {
@@ -245,12 +245,6 @@ export type Timetable = {
   owner: User;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type UpdateTimetableInput = {
-  create: Array<InputMaybe<EditEventInput>>;
-  delete: Array<InputMaybe<Scalars['ID']>>;
-  update: Array<InputMaybe<EditEventInput>>;
 };
 
 export type UpdateUserProfileInput = {
@@ -424,7 +418,6 @@ export type ResolversTypes = {
   UUID: ResolverTypeWrapper<Scalars['UUID']>;
   UnsignedFloat: ResolverTypeWrapper<Scalars['UnsignedFloat']>;
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']>;
-  UpdateTimetableInput: UpdateTimetableInput;
   UpdateUserProfileInput: UpdateUserProfileInput;
   User: ResolverTypeWrapper<User>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']>;
@@ -504,7 +497,6 @@ export type ResolversParentTypes = {
   UUID: Scalars['UUID'];
   UnsignedFloat: Scalars['UnsignedFloat'];
   UnsignedInt: Scalars['UnsignedInt'];
-  UpdateTimetableInput: UpdateTimetableInput;
   UpdateUserProfileInput: UpdateUserProfileInput;
   User: User;
   UtcOffset: Scalars['UtcOffset'];

@@ -1,21 +1,36 @@
+import { AUTHORIZATION_ERROR } from "~constants/errors";
 import { MutationUpdateEventArgs } from "~types/graphql";
 import { AppContext } from "~types/index";
+import QueryError from "~utils/errors/QueryError";
 
 export default {
   Mutation: {
-    updateEvent(
+    async updateEvent(
       _parent: unknown,
       { input }: MutationUpdateEventArgs,
       context: AppContext
     ) {
-      const { prismaClient } = context;
+      const { prismaClient, currentUser, t } = context;
 
-      const { id, title, startDate, startTime, endTime, description, repeat } =
+      const authorizedEvent = await prismaClient.event.findFirst({
+        where: {
+          id: input.id!,
+          owner: {
+            id: currentUser?.id,
+          },
+        },
+      });
+
+      if (!authorizedEvent) {
+        throw new QueryError(t(AUTHORIZATION_ERROR));
+      }
+
+      const { title, startDate, startTime, endTime, description, repeat } =
         input;
 
       return prismaClient.event.update({
         where: {
-          id: id!,
+          id: authorizedEvent.id,
         },
         data: {
           title,
