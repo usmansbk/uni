@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { MutationCreateTimetableArgs } from "~types/graphql";
 import { AppContext } from "~types/index";
 
@@ -40,6 +41,7 @@ export default {
                   endTime,
                   repeat,
                   ownerId: currentUser!.id!,
+                  code: nanoid(10),
                 };
               }),
             },
