@@ -38,14 +38,31 @@ export default {
 
       return prismaClient.$transaction(async (transaction) => {
         await Promise.all(
-          updateItems.map((event) =>
-            transaction.timetable.update({
+          updateItems.map((event) => {
+            const {
+              id,
+              title,
+              description,
+              startDate,
+              startTime,
+              repeat,
+              endTime,
+            } = event!;
+
+            return transaction.event.update({
               where: {
-                id: event!.id!,
+                id: id!,
               },
-              data: event as any,
-            })
-          )
+              data: {
+                title,
+                description,
+                startDate,
+                startTime,
+                repeat,
+                endTime,
+              },
+            });
+          })
         );
         return transaction.timetable.update({
           where: {
@@ -55,10 +72,26 @@ export default {
             ...values,
             events: {
               createMany: {
-                data: createItems.map((event) => ({
-                  ownerId: currentUser?.id,
-                  ...(event as any),
-                })),
+                data: createItems.map((event) => {
+                  const {
+                    title,
+                    description,
+                    startDate,
+                    startTime,
+                    repeat,
+                    endTime,
+                  } = event!;
+
+                  return {
+                    title,
+                    description,
+                    startDate,
+                    startTime,
+                    repeat,
+                    endTime,
+                    ownerId: currentUser!.id!,
+                  };
+                }),
               },
               deleteMany: {
                 id: {
