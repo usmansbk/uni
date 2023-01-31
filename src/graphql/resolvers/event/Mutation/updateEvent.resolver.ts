@@ -12,9 +12,11 @@ export default {
     ) {
       const { prismaClient, currentUser, t } = context;
 
+      const { id, ...data } = input;
+
       const authorizedEvent = await prismaClient.event.findFirst({
         where: {
-          id: input.id!,
+          id: id!,
           owner: {
             id: currentUser?.id,
           },
@@ -25,21 +27,11 @@ export default {
         throw new QueryError(t(AUTHORIZATION_ERROR));
       }
 
-      const { title, startDate, startTime, endTime, description, repeat } =
-        input;
-
       return prismaClient.event.update({
         where: {
           id: authorizedEvent.id,
         },
-        data: {
-          title,
-          startDate,
-          startTime,
-          endTime,
-          description,
-          repeat,
-        },
+        data,
       });
     },
   },
