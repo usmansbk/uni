@@ -4,6 +4,7 @@ type Timetable {
   description: String
   events: [Event]!
   owner: User!
+  isSaved: Boolean!
   isOwner: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime

@@ -39,6 +39,15 @@ export default {
                 id: user.id,
               },
             },
+            {
+              saves: {
+                some: {
+                  user: {
+                    id: user.id,
+                  },
+                },
+              },
+            },
           ],
         },
       });
