@@ -1,4 +1,7 @@
-import { MutationSaveTimetableArgs } from "~types/graphql";
+import {
+  MutationSaveTimetableArgs,
+  MutationUnsaveTimetableArgs,
+} from "~types/graphql";
 import { AppContext } from "~types/index";
 
 export default {
@@ -25,7 +28,7 @@ export default {
     },
     unsaveTimetable(
       parent: unknown,
-      { id }: MutationSaveTimetableArgs,
+      { id }: MutationUnsaveTimetableArgs,
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
