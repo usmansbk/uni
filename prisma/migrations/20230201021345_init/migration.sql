@@ -34,7 +34,6 @@ CREATE TABLE "File" (
 -- CreateTable
 CREATE TABLE "Event" (
     "id" TEXT NOT NULL,
-    "code" TEXT,
     "title" TEXT NOT NULL,
     "description" TEXT,
     "startDate" TIMESTAMP(3) NOT NULL,
@@ -55,7 +54,6 @@ CREATE TABLE "Timetable" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "code" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "ownerId" TEXT NOT NULL,
@@ -78,12 +76,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "File_userAvatarId_key" ON "File"("userAvatarId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Event_code_key" ON "Event"("code");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Timetable_code_key" ON "Timetable"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "SavedTimetable_userId_timetableId_key" ON "SavedTimetable"("userId", "timetableId");
