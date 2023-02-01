@@ -2,7 +2,6 @@ type Timetable {
   id: ID!
   title: String!
   description: String
-  code: ID
   events: [Event]!
   owner: User!
   isOwner: Boolean!

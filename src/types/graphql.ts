@@ -114,7 +114,6 @@ export type EditTimetableInput = {
 export type Event = {
   __typename?: 'Event';
   cancelledDates: Array<Maybe<Scalars['Date']>>;
-  code?: Maybe<Scalars['ID']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['LocalTime']>;
@@ -236,7 +235,6 @@ export enum SocialProvider {
 
 export type Timetable = {
   __typename?: 'Timetable';
-  code?: Maybe<Scalars['ID']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   events: Array<Maybe<Event>>;
@@ -560,7 +558,6 @@ export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<Resolv
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
   cancelledDates?: Resolver<Array<Maybe<ResolversTypes['Date']>>, ParentType, ContextType>;
-  code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endTime?: Resolver<Maybe<ResolversTypes['LocalTime']>, ParentType, ContextType>;
@@ -769,7 +766,6 @@ export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<Resolvers
 }
 
 export type TimetableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Timetable'] = ResolversParentTypes['Timetable']> = {
-  code?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   events?: Resolver<Array<Maybe<ResolversTypes['Event']>>, ParentType, ContextType>;

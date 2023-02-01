@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { MutationCreateTimetableArgs } from "~types/graphql";
 import { AppContext } from "~types/index";
 
@@ -17,7 +16,6 @@ export default {
         data: {
           title,
           description,
-          code: nanoid(10),
           owner: {
             connect: {
               id: currentUser!.id!,
