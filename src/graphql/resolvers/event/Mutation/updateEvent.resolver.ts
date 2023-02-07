@@ -12,7 +12,8 @@ export default {
     ) {
       const { prismaClient, currentUser, t } = context;
 
-      const { id, ...data } = input;
+      const { id, title, description, startDate, startTime, endTime, repeat } =
+        input;
 
       const authorizedEvent = await prismaClient.event.findFirst({
         where: {
@@ -31,7 +32,14 @@ export default {
         where: {
           id: authorizedEvent.id,
         },
-        data,
+        data: {
+          title,
+          description,
+          startDate,
+          startTime,
+          endTime,
+          repeat,
+        },
       });
     },
   },
