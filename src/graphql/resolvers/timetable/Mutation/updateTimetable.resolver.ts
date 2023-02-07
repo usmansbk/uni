@@ -39,13 +39,28 @@ export default {
       return prismaClient.$transaction(async (transaction) => {
         await Promise.all(
           updateItems.map((event) => {
-            const { id, ...data } = event!;
+            const {
+              id,
+              title,
+              description,
+              startDate,
+              startTime,
+              endTime,
+              repeat,
+            } = event!;
 
             return transaction.event.update({
               where: {
                 id: id!,
               },
-              data,
+              data: {
+                title,
+                description,
+                startDate,
+                startTime,
+                endTime,
+                repeat,
+              },
             });
           })
         );
