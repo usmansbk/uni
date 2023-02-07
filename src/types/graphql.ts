@@ -240,6 +240,7 @@ export type Timetable = {
   events: Array<Maybe<Event>>;
   id: Scalars['ID'];
   isOwner: Scalars['Boolean'];
+  isSaved: Scalars['Boolean'];
   owner: User;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -264,6 +265,7 @@ export type User = {
   lastName: Scalars['String'];
   picture?: Maybe<Scalars['URL']>;
   timetables: Array<Maybe<Timetable>>;
+  unlistedEvents: Array<Maybe<Event>>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -771,6 +773,7 @@ export type TimetableResolvers<ContextType = any, ParentType extends ResolversPa
   events?: Resolver<Array<Maybe<ResolversTypes['Event']>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isSaved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -809,6 +812,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   picture?: Resolver<Maybe<ResolversTypes['URL']>, ParentType, ContextType, RequireFields<UserPictureArgs, 'height' | 'width'>>;
   timetables?: Resolver<Array<Maybe<ResolversTypes['Timetable']>>, ParentType, ContextType>;
+  unlistedEvents?: Resolver<Array<Maybe<ResolversTypes['Event']>>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

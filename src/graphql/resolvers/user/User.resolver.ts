@@ -53,5 +53,20 @@ export default {
         orderBy: [{ title: "asc" }],
       });
     },
+    async unlistedEvents(user: User, _args: never, context: AppContext) {
+      const { prismaClient } = context;
+
+      return prismaClient.user
+        .findUnique({
+          where: {
+            id: user.id,
+          },
+        })
+        .createdEvents({
+          where: {
+            timetableId: null,
+          },
+        });
+    },
   },
 };

@@ -12,6 +12,7 @@ type User {
   updatedAt: DateTime
 
   timetables: [Timetable]!
+  unlistedEvents: [Event]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
 }
 
 type Query {
