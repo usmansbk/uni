@@ -15,6 +15,7 @@ type Event {
   timetable: Timetable
   owner: User!
   isOwner: Boolean!
+  isCancelled: Boolean!
   cancelledDates: [Date]!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -40,5 +41,5 @@ type Mutation {
   createEvent(input: EditEventInput!): Event! @auth
   updateEvent(input: EditEventInput!): Event! @auth
   deleteEvent(id: ID!, reason: NonEmptyString): Event! @auth
-  cancelEvent(date: Date!): Event! @auth
+  cancelEvent(id: ID!, date: Date): Event! @auth
 }

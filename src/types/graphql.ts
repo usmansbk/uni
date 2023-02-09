@@ -118,6 +118,7 @@ export type Event = {
   description?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['LocalTime']>;
   id: Scalars['ID'];
+  isCancelled: Scalars['Boolean'];
   isOwner: Scalars['Boolean'];
   owner: User;
   repeat?: Maybe<RepeatFrequency>;
@@ -145,7 +146,8 @@ export type Mutation = {
 
 
 export type MutationCancelEventArgs = {
-  date: Scalars['Date'];
+  date?: InputMaybe<Scalars['Date']>;
+  id: Scalars['ID'];
 };
 
 
@@ -564,6 +566,7 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endTime?: Resolver<Maybe<ResolversTypes['LocalTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isCancelled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   repeat?: Resolver<Maybe<ResolversTypes['RepeatFrequency']>, ParentType, ContextType>;
@@ -664,7 +667,7 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  cancelEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCancelEventArgs, 'date'>>;
+  cancelEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCancelEventArgs, 'id'>>;
   createEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCreateEventArgs, 'input'>>;
   createTimetable?: Resolver<ResolversTypes['Timetable'], ParentType, ContextType, RequireFields<MutationCreateTimetableArgs, 'input'>>;
   deleteEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationDeleteEventArgs, 'id'>>;

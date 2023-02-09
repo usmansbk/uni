@@ -45,6 +45,7 @@ CREATE TABLE "Event" (
     "ownerId" TEXT NOT NULL,
     "repeat" "RepeatFrequency",
     "cancelledDates" TIMESTAMP(3)[],
+    "isAllCancelled" BOOLEAN DEFAULT false,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
