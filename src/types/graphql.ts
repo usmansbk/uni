@@ -118,7 +118,7 @@ export type Event = {
   description?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['LocalTime']>;
   id: Scalars['ID'];
-  isCancelled: Scalars['Boolean'];
+  isAllCancelled?: Maybe<Scalars['Boolean']>;
   isOwner: Scalars['Boolean'];
   owner: User;
   repeat?: Maybe<RepeatFrequency>;
@@ -566,7 +566,7 @@ export type EventResolvers<ContextType = any, ParentType extends ResolversParent
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endTime?: Resolver<Maybe<ResolversTypes['LocalTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  isCancelled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isAllCancelled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   isOwner?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   repeat?: Resolver<Maybe<ResolversTypes['RepeatFrequency']>, ParentType, ContextType>;
